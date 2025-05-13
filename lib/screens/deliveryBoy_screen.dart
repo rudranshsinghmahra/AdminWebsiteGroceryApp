@@ -6,7 +6,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import '../services/sidebar.dart';
 
 class DeliveryBoyScreen extends StatefulWidget {
-  const DeliveryBoyScreen({Key? key}) : super(key: key);
+  const DeliveryBoyScreen({super.key});
   static const String id = "deliveryBoy-screen";
 
   @override

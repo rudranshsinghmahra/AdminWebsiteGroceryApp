@@ -4,7 +4,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import '../services/sidebar.dart';
 
 class AdminUsers extends StatefulWidget {
-  const AdminUsers({Key? key}) : super(key: key);
+  const AdminUsers({super.key});
   static const id = "admin-user-screen";
 
   @override

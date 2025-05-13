@@ -5,7 +5,8 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import '../services/sidebar.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+  const CategoriesScreen({super.key});
+
   static const id = "categories-screen";
 
   @override
@@ -14,6 +15,7 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   final SidebarWidget _sidebarWidget = SidebarWidget();
+
   @override
   Widget build(BuildContext context) {
     return AdminScaffold(
@@ -44,9 +46,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ),
               Text("Add New Categories and Sub Categories"),
-              Divider(thickness: 5,),
-              // CategoriesUploadWidget(),
-              Divider(thickness: 5,),
+              Divider(
+                thickness: 5,
+              ),
+              //TODO CategoriesUploadWidget()
+              // Divider(
+              //   thickness: 5,
+              // ),
               CategoryListWidget(),
             ],
           ),

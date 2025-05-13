@@ -4,7 +4,7 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import '../services/sidebar.dart';
 
 class OrderScreen extends StatefulWidget {
-  const OrderScreen({Key? key}) : super(key: key);
+  const OrderScreen({super.key});
   static const id = "orders-screen";
 
   @override

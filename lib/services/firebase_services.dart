@@ -22,11 +22,9 @@ class FirebaseServices {
 
   Future<String> uploadBannerImageToDatabase(url) async {
     String downloadUrl = await storage.ref(url).getDownloadURL();
-    if (downloadUrl != null) {
-      firebaseFirestore.collection('slider').add({
-        'images': downloadUrl,
-      });
-    }
+    firebaseFirestore.collection('slider').add({
+      'images': downloadUrl,
+    });
     return downloadUrl;
   }
 
@@ -44,12 +42,10 @@ class FirebaseServices {
 
   Future<String> uploadCategoryToDatabase(url, categoryName) async {
     String downloadUrl = await storage.ref(url).getDownloadURL();
-    if (downloadUrl != null) {
-      category.doc(categoryName).set({
-        'images': downloadUrl,
-        'name': categoryName,
-      });
-    }
+    category.doc(categoryName).set({
+      'images': downloadUrl,
+      'name': categoryName,
+    });
     return downloadUrl;
   }
 
@@ -68,7 +64,6 @@ class FirebaseServices {
   }
 
   updateDeliveryBoyStatus({id, status}) {
-    // Create a reference to the document the transaction will use
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection('deliveryBoys').doc(id);
 
@@ -79,12 +74,6 @@ class FirebaseServices {
       if (!snapshot.exists) {
         throw Exception("User does not exist!");
       }
-
-      // Update the follower count based on the current count
-      // Note: this could be done without a transaction
-      // by updating the population using FieldValue.increment()
-
-      // Perform an update on the document
       transaction.update(documentReference, {'accVerified': status});
     }).then((value) {
       EasyLoading.showSuccess(status == true

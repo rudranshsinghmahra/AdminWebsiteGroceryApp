@@ -20,11 +20,11 @@ class SidebarWidget {
       activeTextStyle: const TextStyle(color: Colors.white),
       backgroundColor: Colors.black12,
       items: const [
-        AdminMenuItem(
-          title: 'Dashboard',
-          route: HomeScreen.id,
-          icon: Icons.dashboard,
-        ),
+        // AdminMenuItem(
+        //   title: 'Dashboard',
+        //   route: HomeScreen.id,
+        //   icon: Icons.dashboard,
+        // ),
         AdminMenuItem(
           title: 'Banners',
           route: BannerScreen.id,

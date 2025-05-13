@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class VendorDetailsBox extends StatefulWidget {
   final String uid;
-  const VendorDetailsBox({Key? key, required this.uid}) : super(key: key);
+  const VendorDetailsBox({super.key, required this.uid});
 
   @override
   State<VendorDetailsBox> createState() => _VendorDetailsBoxState();

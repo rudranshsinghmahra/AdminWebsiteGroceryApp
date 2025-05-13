@@ -1,4 +1,3 @@
-import 'package:admin_website_grocery_app/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +5,15 @@ import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 import '../constants.dart';
 import '../services/firebase_services.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
+
   static const id = "login-screen";
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -21,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final FirebaseServices _services = FirebaseServices();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   // String? username;
   // String? password;
 
@@ -63,28 +65,24 @@ class _LoginScreenState extends State<LoginScreen> {
       maxProgress: 100.0,
     );
 
-    _login({username, password}) async {
+    Future<void> login({username, password}) async {
       await pr.show();
       _services.getAdminCredentials(username).then((value) async {
         if (value.exists) {
           if (value['username'] == username && value['password'] == password) {
-            // print(username);
-            // print(password);
-            // print(value['username']);
-            // print(value['password']);
             try {
               UserCredential userCredential =
                   await FirebaseAuth.instance.signInAnonymously();
               await pr.hide();
               Navigator.pushReplacementNamed(context, HomeScreen.id);
-                        } catch (e) {
+            } catch (e) {
               print(e.toString());
             }
           } else {
             await pr.hide();
             showAlert("Invalid User");
           }
-        }else {
+        } else {
           await pr.hide();
           showAlert("Invalid User");
         }
@@ -101,11 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
       body: FutureBuilder(
         future: _initialize,
         builder: (context, snapshot) {
-          // if(snapshot.hasError){
-          //   return const Center(
-          //     child: Text("Connection Has Error"),
-          //   );
-          // }
           if (snapshot.connectionState == ConnectionState.done) {
             return Container(
               decoration: const BoxDecoration(
@@ -118,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ], begin: Alignment.topCenter, end: Alignment(0.0, 0.0)),
               ),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   height: 400,
                   child: Card(
@@ -130,75 +123,72 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/logo.png'),
-                                  const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "GROCERY ADMIN APP",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                            Column(
+                              children: [
+                                Image.asset('assets/logo.png'),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "GROCERY ADMIN APP",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  TextFormField(
-                                    controller: usernameController,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Enter Username";
-                                      }
-                                      // setState(() {
-                                      //   username = value.toString();
-                                      // });
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.person),
-                                        hintText: "Username",
-                                        contentPadding: const EdgeInsets.only(
-                                            left: 20, right: 20),
-                                        border: const OutlineInputBorder(),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                        ))),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  TextFormField(
-                                    controller: passwordController,
-                                    // obscureText: true,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Enter Password";
-                                      }
-                                      if (value.length < 6) {
-                                        return "Enter A Strong Password";
-                                      }
-                                      // setState(() {
-                                      //   password = value.toString();
-                                      // });
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Icons.vpn_key_sharp),
-                                      hintText: "Password",
+                                ),
+                                TextFormField(
+                                  controller: usernameController,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Enter Username";
+                                    }
+                                    // setState(() {
+                                    //   username = value.toString();
+                                    // });
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      prefixIcon: const Icon(Icons.person),
+                                      hintText: "Username",
                                       contentPadding: const EdgeInsets.only(
                                           left: 20, right: 20),
                                       border: const OutlineInputBorder(),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
+                                          borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                      ))),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextFormField(
+                                  controller: passwordController,
+                                  // obscureText: true,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Enter Password";
+                                    }
+                                    if (value.length < 6) {
+                                      return "Enter A Strong Password";
+                                    }
+                                    // setState(() {
+                                    //   password = value.toString();
+                                    // });
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: const Icon(Icons.vpn_key_sharp),
+                                    hintText: "Password",
+                                    contentPadding: const EdgeInsets.only(
+                                        left: 20, right: 20),
+                                    border: const OutlineInputBorder(),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             Row(
                               children: [
@@ -206,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
-                                        _login(
+                                        login(
                                             username: usernameController.text,
                                             password: passwordController.text);
                                       }
@@ -216,7 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                           MaterialStateProperty.all(
                                               Theme.of(context).primaryColor),
                                     ),
-                                    child: const Text("Login",style: TextStyle(color: Colors.white),),
+                                    child: const Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 )
                               ],

@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class VendorDataTable extends StatefulWidget {
-  const VendorDataTable({Key? key}) : super(key: key);
+  const VendorDataTable({super.key});
 
   @override
   State<VendorDataTable> createState() => _VendorDataTableState();
@@ -161,12 +161,12 @@ class _VendorDataTableState extends State<VendorDataTable> {
         DataCell(Text(documentSnapshot['shopName'])),
         DataCell(
           Row(
-            children: const [
+            children: [
               Icon(
                 Icons.star,
                 color: Colors.grey,
               ),
-              Text("3.5")
+              Text("${documentSnapshot['rating']}")
             ],
           ),
         ),
